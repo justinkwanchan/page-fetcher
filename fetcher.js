@@ -16,9 +16,10 @@ fs.access(directory, (err) => {
   } else {
     // tcp access to server
     request(url, (error, response, body) => {
-      if (response.statusCode !== 200) {
+      if (error) {
         console.log('An error occured:', error); // Print the error if one occurred
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      } else if (response.statusCode !== 200) {
+        console.log('An error occured - code:', response && response.statusCode); // Print the response status code if a response was received
       } else {
         fs.writeFile(filePath, body, (err) => {
           if (err) throw err;
